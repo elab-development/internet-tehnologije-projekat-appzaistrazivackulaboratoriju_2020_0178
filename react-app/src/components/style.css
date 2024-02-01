@@ -127,6 +127,21 @@ a {
     gap: 50px
   
   }
+ .nav-span{
+  cursor: pointer;
+ }
+  .nav-home{
+    z-index: 2;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    align-items: center;
+    height: 100px;
+    justify-content: center;
+    gap: 75px;
+    display: flex;
+    background-color: grey;
+  }
   .par-home-div{
     gap: 50px;
     flex-direction: column;

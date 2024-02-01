@@ -8,6 +8,7 @@ import image1 from "./images/random_logo_by_criticl_d7eqdvw-pre.png";
 import image2 from './images/download.png';
 import image4 from './images/png-clipart-github-pages-random-icons-white-logo.png';
 import image5 from './images/logo.png'
+import NavBar from './components/NavBar';
 
 
 const HomePage = () => {
@@ -225,6 +226,7 @@ const HomePage = () => {
 
     return (
         <div>
+            <NavBar/>
             <header>
                 <h1 className='genoma-header'>Genoma Vision Lab</h1>
             </header>
