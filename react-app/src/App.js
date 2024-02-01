@@ -6,6 +6,7 @@ import About from './About'
 
 import {Loading} from './components/Loading';
 import "./components/style.css"
+import Contact from './Contact'
 
 
 
@@ -17,6 +18,7 @@ const App = () => {
           <Route  path="/" element={<Home/>}/>
           <Route path="/galery" element={<Galery />} />
           <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
        </Routes>
     </>
  );
