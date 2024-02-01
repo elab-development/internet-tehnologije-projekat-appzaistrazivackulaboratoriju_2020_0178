@@ -11,14 +11,14 @@ export default class Footer extends React.Component {
                   © 2024 ISTRAŽIVAČKA LABORATORIJA. All Rights Reserved
                 </div>
                 <div className="footer-links-div">
-                    <a href="https://www.linkedin.com/company/ultimatefintech/">linkedin</a>
-                    <a href=" https://www.instagram.com/ultimatefintech/?hl=en">instagram</a>
-                    <a href="https://twitter.com/uf_agency">twitter</a>
-                    <a href="https://www.facebook.com/ultimatefintech">facebook</a>
+                    <a href="">linkedin</a>
+                    <a href="">instagram</a>
+                    <a href="">twitter</a>
+                    <a href="">facebook</a>
                 </div>
                 <div className="footer-terms-conditions">
                   {/*<a href="">terms and conditions </a>*/}
-                  <a href="/privacy_policy">contact</a>
+                  <a href="/contact">contact</a>
                 </div>
               </div>
             </footer>

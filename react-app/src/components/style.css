@@ -164,7 +164,7 @@ box-shadow: 5px 10px 5px 0px rgba(0,0,0,0.75);
     scroll-behavior: auto;
     padding: 20px 33px;
     gap: 65px;
-    overflow-x: auto;
+    overflow-x: hidden;
     cursor: grab;
     /*touch-action: none;*/
 }
