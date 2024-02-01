@@ -4,7 +4,7 @@ import React from 'react'
 export default class NavBar extends React.Component {
     render() {
         return (
-          <div className='nav-home'>
+          <div id={"nav"} className='nav-home'>
         
       <a href={"/"}><span  className='nav-span'>Home</span></a>
        <a href={"/about"}><span className='nav-span'>About</span></a>

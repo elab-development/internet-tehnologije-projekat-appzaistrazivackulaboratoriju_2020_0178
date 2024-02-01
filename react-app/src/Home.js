@@ -9,6 +9,7 @@ import image2 from './images/download.png';
 import image4 from './images/png-clipart-github-pages-random-icons-white-logo.png';
 import image5 from './images/logo.png'
 import NavBar from './components/NavBar';
+import { Loading } from './components/Loading';
 
 
 const HomePage = () => {
@@ -220,12 +221,11 @@ const HomePage = () => {
     //     };
     //   }, [state.viewport]);
 
-    //   const setChildRef = (ref) => {
-    //     cocaineLineRef.current = ref;
-    //   };
+   
 
     return (
-        <div>
+        <div style={{overflow:"auto"}}>
+            <Loading home={true}/>
             <NavBar/>
             <header>
                 <h1 className='genoma-header'>Genoma Vision Lab</h1>
