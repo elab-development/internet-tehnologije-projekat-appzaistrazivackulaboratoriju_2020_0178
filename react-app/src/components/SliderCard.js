@@ -1,119 +1,102 @@
-import React, {Component} from "react";
+import React, { useState, useRef } from "react";
 
-class SliderCard extends Component {
-    // constructor(props) {
-    //     super(props);
+const SliderCard = (props) => {
+    const [state, setState] = useState({
+        mouseDown: false,
+        startX: null,
+        scrollLeft: null,
+        isVisible: false,
+        showMore: false,
+        
+    });
 
-    //     this.state = {
-    //         mouseDown: false,
-    //         startX: null,
-    //         scrollLeft: null,
-    //         isVisible: false,
-    //         showMore: false,
-    //     };
-    //     this.mouseDown = false;
-    //     this.startX = null;
-    //     this.scrollLeft = null;
-    //     this.slider = React.createRef();
-    //     this.sliderCard = React.createRef();
-    // }
+    
+  
 
-    // startDragging = (e) => {
-    //     this.state.mouseDown = true;
-    //     this.state.startX = e.pageX - this.slider.current.offsetLeft;
-    //     this.state.scrollLeft = this.slider.current.scrollLeft;
-    //     this.forceUpdate();
-    // };
-    // move = (e) => {
-    //     e.preventDefault();
-    //     if (!this.state.mouseDown) {
-    //         return;
-    //     }
-    //     const x = e.pageX - this.slider.current.offsetLeft;
-    //     const scroll = x - this.state.startX;
-    //     this.slider.current.scrollLeft = this.state.scrollLeft - scroll;
-    //     this.forceUpdate();
-    // };
+    const slider = useRef(null);
 
-    // stopDragging = () => {
-    //     this.state.mouseDown = false;
-    //     this.forceUpdate();
-    // };
+    const startDragging = (e) => {
+        setState({
+            ...state,
+            
+            mouseDown: true,
+            startX: e.pageX - slider.current.offsetLeft,
+            scrollLeft: slider.current.scrollLeft,
+           
+        });
+        
+    };
 
-    // componentDidMount=()=>{
-    //     console.log("hereee")
-    // }
+    const move = (e) => {
+        e.preventDefault();
+        if (!state.mouseDown) {
+            return;
+        }
+        const x = e.pageX - slider.current.offsetLeft;
+        const scroll = x - state.startX;
+        slider.current.scrollLeft = state.scrollLeft - scroll;
+    };
 
-    // componentDidMount = () => {
-    //
-    //     this.slider.current.addEventListener("wheel", this.props.handleScroll);
-    // };
-    //
-    // componentWillUnmount() {
-    //
-    //     this.slider.current.removeEventListener("wheel", this.props.handleScroll);
-    // }
+    const stopDragging = () => {
+        setState({ ...state, mouseDown: false });
+    };
 
+    const toggleShowMore = () => {
+        setState((prevState) => ({ ...prevState, showMore: !prevState.showMore }));
+    };
 
-    // toggleShowMore = () => {
-    //     this.setState((prevState) => ({showMore: !prevState.showMore}));
-    // };
+    const { img, first, second, third, name, position, company } = props;
+    const { showMore } = state;
 
-    render() {
-       
-        const {img, first, second, third, name, position, company, reference} = this.props;
-        // const {showMore} = this.state;
+    const displayThird = showMore ? third : undefined;
 
-        // const displayThird = showMore ? third : undefined;
+    return (
+        <div className="review-divs" ref={slider} onMouseDown={startDragging} onMouseMove={move} onMouseUp={stopDragging}>
+            <div className="review-div">
+                <img className="review-logo" src={img} alt="" />
 
-        return (
-            <div className="review-divs" >
-                <div className="review-div">
-                    <img className="review-logo" src={img} alt=""/>
+                <p className="review-text">{first}</p>
 
-                    <p className="review-text">{first}</p>
+                <p className="review-text">{second}</p>
 
-                    <p className="review-text">{second}</p>
-{/* 
-                    {displayThird && <p className="review-text">{displayThird}</p>} */}
+                {displayThird && <p className="review-text">{displayThird}</p>}
 
-                    <div className="review-from">
-                        <p className="review-name">{name}</p>
-                        <p className="review-position">{position}</p>
-                        <p className="review-company">{company}</p>
-                    </div>
-
-                    {/* {!showMore && (third) && (
-                        <div
-                            style={{
-                                textAlign: "center",
-                                fontSize: "12px",
-                                zIndex: 2,
-                                cursor: "pointer",
-                            }}
-                            onClick={this.toggleShowMore}
-                        >
-                            + LOAD MORE
-                        </div>
-                    )} */}
-
-                    {/* {showMore && (third) && (
-                        <div
-                            style={{
-                                textAlign: "center",
-                                fontSize: "12px",
-                                zIndex: 2,
-                                cursor: "pointer",
-                            }}
-                            onClick={this.toggleShowMore}
-                        >
-                            - SHOW LESS
-                        </div>
-                    )} */}
+                <div className="review-from">
+                    <p className="review-name">{name}</p>
+                    <p className="review-position">{position}</p>
+                    <p className="review-company">{company}</p>
                 </div>
+
+                {!showMore && third && (
+                    <div
+                        style={{
+                            textAlign: "center",
+                            fontSize: "12px",
+                            zIndex: 2,
+                            cursor: "pointer",
+                        }}
+                        onClick={toggleShowMore}
+                    >
+                        + LOAD MORE
+                    </div>
+                )}
+
+                {showMore && third && (
+                    <div
+                        style={{
+                            textAlign: "center",
+                            fontSize: "12px",
+                            zIndex: 2,
+                            cursor: "pointer",
+                        }}
+                        onClick={toggleShowMore}
+                    >
+                        - SHOW LESS
+                    </div>
+                )}
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
 export default SliderCard;

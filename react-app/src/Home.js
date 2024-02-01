@@ -25,9 +25,7 @@ const HomePage = () => {
         isScrolling: false,
         overflowDiv: false,
     });
-
     const slider = useRef(null);
-    const cocaineLineRef = useRef(null);
 
     const cards = [
         {
@@ -179,47 +177,51 @@ const HomePage = () => {
     ];
 
 
+      const startDragging = (e) => {
+      
+        setState((prevState) => ({
+          ...prevState,
+          mouseDown: true,
+          startX: e.pageX - slider.current.offsetLeft,
+          scrollLeft: slider.current.scrollLeft,
+        }));
+        console.log(e.pageX - slider.current.offsetLeft)
+        console.log(slider.current.offsetLeft)
+      };
 
+      const stopDragging = () => {
+        setState((prevState) => ({ ...prevState, mouseDown: false }));
+      };
 
-    //   const startDragging = (e) => {
-    //     setState((prevState) => ({
-    //       ...prevState,
-    //       mouseDown: true,
-    //       startX: e.pageX - slider.current.offsetLeft,
-    //       scrollLeft: slider.current.scrollLeft,
-    //     }));
-    //   };
+      const move = (e) => {
+        console.log("hrere")
+        e.preventDefault();
+        if (!state.mouseDown) {
+          return;
+        }
+        const x = e.pageX - slider.current.offsetLeft;
+        const scroll = x - state.startX;
+        slider.current.scrollLeft = state.scrollLeft - scroll;
+      };
 
-    //   const stopDragging = () => {
-    //     setState((prevState) => ({ ...prevState, mouseDown: false }));
-    //   };
+      useEffect(() => {
+    
+        // slider.current.addEventListener('mousemove', move);
+        // slider.current.addEventListener('mousedown', startDragging);
+        // slider.current.addEventListener('mouseup', stopDragging);
+        slider.current.addEventListener('drag', move);
+        slider.current.addEventListener('drag', move);
+        // slider.current.addEventListener('mouseleave', stopDragging);
 
-    //   const move = (e) => {
-    //     e.preventDefault();
-    //     if (!state.mouseDown) {
-    //       return;
-    //     }
-    //     const x = e.pageX - slider.current.offsetLeft;
-    //     const scroll = x - state.startX;
-    //     slider.current.scrollLeft = state.scrollLeft - scroll;
-    //   };
+        // return () => {
+        //   slider.current.removeEventListener('mousemove', move);
+        //   slider.current.removeEventListener('mousedown', startDragging);
+        //   slider.current.removeEventListener('mouseup', stopDragging);
+        //   slider.current.removeEventListener('mouseleave', stopDragging);
+        // };
+      }, [state.viewport]);
+    
 
-    //   useEffect(() => {
-    //     // const categoriesList = state.viewport ? categories : categoriesMobile;
-    //     // setState((prevState) => ({ ...prevState, categories: categoriesList }));
-
-    //     slider.current.addEventListener('mousemove', move);
-    //     slider.current.addEventListener('mousedown', startDragging);
-    //     slider.current.addEventListener('mouseup', stopDragging);
-    //     slider.current.addEventListener('mouseleave', stopDragging);
-
-    //     return () => {
-    //       slider.current.removeEventListener('mousemove', move);
-    //       slider.current.removeEventListener('mousedown', startDragging);
-    //       slider.current.removeEventListener('mouseup', stopDragging);
-    //       slider.current.removeEventListener('mouseleave', stopDragging);
-    //     };
-    //   }, [state.viewport]);
 
    
 
@@ -251,11 +253,11 @@ const HomePage = () => {
 
             <div className="review-section" style={{ position: 'relative' }}>
                 <h1 className="review-section-h1">WHAT OUR CLIENTS SAY</h1>
-                <div className="parent" ref={slider}>
+                <div className="parent" ref={slider} >
                     {cards.map((card, key) => (
                         <Fragment key={key}>
                             <SliderCard
-                                img={card.img}
+                                img={card.img} 
                                 first={card.first}
                                 second={card.second}
                                 third={card.third}
