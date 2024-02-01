@@ -8,7 +8,7 @@ export default class Footer extends React.Component {
             <footer>
               <div className="black-footer-big-width-contact">
                 <div className="footer-rights">
-                  © 2024 ISTRAŽIVAČKA LABORATORIJA. All Rights Reserved
+                  © 2024 GENOMA VISION LAB. All Rights Reserved
                 </div>
                 <div className="footer-links-div">
                     <a href="https://www.linkedin.com/company/ultimatefintech/">linkedin</a>

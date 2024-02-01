@@ -13,8 +13,11 @@ import { Loading } from './components/Loading';
 
 
 const HomePage = () => {
+    const [mouseDown, setMouseDown] = useState(false)
+    const [scrollLeft, setScrollLeft] = useState(0)
+    const [value, setValue] = useState(0);
+    const [startX, setStartX] = useState(0)
     const [state, setState] = useState({
-        mouseDown: false,
         startX: null,
         scrollLeft: null,
         isVisible: false,
@@ -176,80 +179,68 @@ const HomePage = () => {
         },
     ];
 
+    const startDragging = (e) => {
+        setMouseDown(true);
+        setStartX( e.pageX - slider.current.offsetLeft)
+        setScrollLeft(slider.current.scrollLeft)
+    };
 
-      const startDragging = (e) => {
-      
-        setState((prevState) => ({
-          ...prevState,
-          mouseDown: true,
-          startX: e.pageX - slider.current.offsetLeft,
-          scrollLeft: slider.current.scrollLeft,
-        }));
-        console.log(e.pageX - slider.current.offsetLeft)
-        console.log(slider.current.offsetLeft)
-      };
+    const stopDragging = () => {
+        setMouseDown(false);
+    };
 
-      const stopDragging = () => {
-        setState((prevState) => ({ ...prevState, mouseDown: false }));
-      };
-
-      const move = (e) => {
-        console.log("hrere")
+    const move = (e) => {
+        console.log(mouseDown);
         e.preventDefault();
-        if (!state.mouseDown) {
-          return;
+        if (!mouseDown) {
+            return;
         }
         const x = e.pageX - slider.current.offsetLeft;
-        const scroll = x - state.startX;
-        slider.current.scrollLeft = state.scrollLeft - scroll;
-      };
+        const scroll = x - startX;
+        slider.current.scrollLeft = scrollLeft - scroll;
+        setValue(value + 1)
+    };
 
-      useEffect(() => {
-    
-        // slider.current.addEventListener('mousemove', move);
-        // slider.current.addEventListener('mousedown', startDragging);
-        // slider.current.addEventListener('mouseup', stopDragging);
-        slider.current.addEventListener('drag', move);
-        slider.current.addEventListener('drag', move);
-        // slider.current.addEventListener('mouseleave', stopDragging);
+    useEffect(() => {
+        slider.current.addEventListener('mousemove', move);
+        slider.current.addEventListener('mousedown', startDragging);
+        slider.current.addEventListener('mouseup', stopDragging);
+        slider.current.addEventListener('mouseleave', stopDragging);
 
-        // return () => {
-        //   slider.current.removeEventListener('mousemove', move);
-        //   slider.current.removeEventListener('mousedown', startDragging);
-        //   slider.current.removeEventListener('mouseup', stopDragging);
-        //   slider.current.removeEventListener('mouseleave', stopDragging);
-        // };
-      }, [state.viewport]);
-    
+        return () => {
+            slider.current.removeEventListener('mousemove', move);
+            slider.current.removeEventListener('mousedown', startDragging);
+            slider.current.removeEventListener('mouseup', stopDragging);
+            slider.current.removeEventListener('mouseleave', stopDragging);
+        };
+    }, [mouseDown]);
 
-
-   
 
     return (
-        <div style={{overflow:"auto"}}>
-            <Loading home={true}/>
-            <NavBar/>
+        <div style={{ overflow: "auto" }}>
+            <Loading home={true} />
+            <NavBar />
             <header>
                 <h1 className='genoma-header'>Genoma Vision Lab</h1>
             </header>
-            <hr/>
-           <div className='btn-par'>
-           <div className='par-home-div'>
-           <p className='par-home'>
-                Welcome to Genoma Vision Lab, a research center dedicated to groundbreaking discoveries in the field of
-                genetics and genomics. Our mission is to explore and develop innovative technologies that deeply
-                understand the genetic foundation of life.
-                At Genoma Vision Lab, our team of experts consists of leading geneticists,
-                molecular biologists, and bioinformaticians who are committed to unraveling the intricacies of the genome. Utilizing state-of-the-art sequencing techniques and data analysis, we concentrate on exploring the genomic landscape to uncover new insights into the fundamental aspects of life.
-            </p>
+            <hr />
+            <div className='btn-par'>
+                <div className='par-home-div'>
+                    <p className='par-home'>
+                        Welcome to Genoma Vision Lab, a research center dedicated to groundbreaking discoveries in the field of
+                        genetics and genomics. Our mission is to explore and develop innovative technologies that deeply
+                        understand the genetic foundation of life.
+                        At Genoma Vision Lab, our team of experts consists of leading geneticists,
+                        molecular biologists, and bioinformaticians who are committed to unraveling the intricacies of the genome. Utilizing state-of-the-art sequencing techniques and data analysis, we concentrate on exploring the genomic landscape to uncover new insights into the fundamental aspects of life.
+                    </p>
 
-           <a>
-           <button className='home-btn'> 
-           LET’S TALK
-            </button>
-           </a>
-           </div>
-           </div>
+                    <a>
+                        <button className='home-btn'>
+                            LET’S TALK
+                        </button>
+                    </a>
+                </div>
+            </div>
 
             <div className="review-section" style={{ position: 'relative' }}>
                 <h1 className="review-section-h1">WHAT OUR CLIENTS SAY</h1>
@@ -257,7 +248,7 @@ const HomePage = () => {
                     {cards.map((card, key) => (
                         <Fragment key={key}>
                             <SliderCard
-                                img={card.img} 
+                                img={card.img}
                                 first={card.first}
                                 second={card.second}
                                 third={card.third}

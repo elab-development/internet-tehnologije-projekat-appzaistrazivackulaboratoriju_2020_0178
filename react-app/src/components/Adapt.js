@@ -1,4 +1,6 @@
 import React from "react";
+import './style.css';
+
 export default class Adapt extends React.Component {
   render() {
     return (
